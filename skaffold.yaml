@@ -1,0 +1,20 @@
+apiVersion: skaffold/v4beta2 latest
+kind: Config
+metadata:
+  name: ticketing-microservice
+build:
+  local:
+    push: false
+  artifacts:
+    - image: istiyak94/ticketing-auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+deploy:
+  kubectl:
+    defaultNamespace: ticketing-microservice
+    
