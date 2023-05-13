@@ -1,16 +1,19 @@
-import express from "express";
-
-const {
-    PORT = 5000
-} = process.env;
-
-const app = express();
+import config from './config';
+import mongoClient from './db/mongodb';
+import {app} from './app';
 
 
-app.use("/", (req, res, next) => {
-    return res.json({message: "Hello World"});
-});
+const start =async () => {
+    try {
+        await mongoClient.connect();
 
-app.listen(PORT, ()=> {
-    console.log(`Server is running on port ${PORT}`);
-});
+        app.listen(config.PORT, ()=> {
+            console.log(`Server is running on port ${config.PORT}`);
+        });
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+start();
