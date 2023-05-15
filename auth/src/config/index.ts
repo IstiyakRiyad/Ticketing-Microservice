@@ -10,14 +10,16 @@ interface ENV {
     PORT: number | undefined;
     MONGO_URI: string | undefined;
     DATABASE_NAME: string | undefined;
+    JWT_KEY: string | undefined;
 }
 
 // CONFIG interface 
 interface Config {
-    NODE_ENV: string,
-    PORT: number,
-    MONGO_URI: string,
-    DATABASE_NAME: string
+    NODE_ENV: string;
+    PORT: number;
+    MONGO_URI: string;
+    DATABASE_NAME: string;
+    JWT_KEY: string;
 }
 
 const getConfig = (): ENV => {
@@ -25,7 +27,8 @@ const getConfig = (): ENV => {
         MONGO_URI: process.env.MONGO_URI,
         PORT: process.env.PORT ? Number(process.env.PORT) : undefined,
         NODE_ENV: process.env.NODE_ENV,
-        DATABASE_NAME: process.env.DATABASE_NAME
+        DATABASE_NAME: process.env.DATABASE_NAME,
+        JWT_KEY: process.env.JWT_KEY
     }
 }
 

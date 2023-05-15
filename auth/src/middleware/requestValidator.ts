@@ -1,10 +1,13 @@
 import {Request, Response, NextFunction } from "express";
 import RequestValidator from "../interfaces/RequestValidator";
+import {RequestValidationError} from '@istiyakriyad/common';
+import { ZodError } from "zod";
 
 
 export function requestValidator(validators: RequestValidator) {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
+            console.log(req.body);
             if(validators.params) {
                 req.params = await validators.params.parseAsync(req.params);
             }
@@ -17,7 +20,10 @@ export function requestValidator(validators: RequestValidator) {
             next();
         }
         catch(error) {
-            next(error);
+            console.log(error);
+            if(error instanceof ZodError) {
+                next(new RequestValidationError(error));
+            }
         }
     }
 }
